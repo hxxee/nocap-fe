@@ -33,7 +33,15 @@ const Article = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const goBack = () => navigate(-1);
+  const goBack = () => {
+    if (location.state?.fromLoading) {
+      // 분석 요청을 통해 들어온 경우
+      navigate(-2); // 혹은 navigate("/news") 등 원하시는 곳
+    } else {
+      navigate(-1); // 일반 뒤로가기
+    }
+  };
+
   const goMy = () => navigate(`/my`);
   const goMain = () => navigate(`/`);
   const goNews = () => navigate(`/news`);

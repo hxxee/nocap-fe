@@ -375,11 +375,12 @@ export const Related = styled.div`
   margin-top: 77px;
   display: flex;
   flex-direction: column;
-  width: 368px;
-  align-items: start;
+  width: 100%;
+  align-items: center;
 
   @media screen and (min-width: 768px) {
     width: 620px;
+    align-items: start;
   }
 `;
 

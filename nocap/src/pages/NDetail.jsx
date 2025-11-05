@@ -170,7 +170,8 @@ const NDetail = () => {
 
       if (analysisRes.status === 200) {
         navigate("/analysis/article", {
-          state: { analysisId: analysisRes.data.analysisId },
+          state: { analysisId: analysisRes.data.analysisId, fromLoading: true },
+          replace: true,
         });
       }
     } catch (error) {

@@ -167,7 +167,7 @@ const Main = () => {
           const sorted = [...res.data].sort(
             (a, b) => new Date(b.date) - new Date(a.date)
           );
-          setAnalysisList(sorted.slice(0, 3)); // 최신 3개만
+          setAnalysisList(sorted); // ✅ 더 이상 자르지 않기
         }
       } catch (err) {
         console.error("❌ 분석 뉴스 목록 불러오기 실패:", err);
@@ -224,6 +224,19 @@ const Main = () => {
       alert("뉴스 상세 정보를 불러올 수 없습니다.");
     }
   };
+
+  const [visibleCount, setVisibleCount] = useState(
+    window.innerWidth <= 768 ? 4 : 3
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleCount(window.innerWidth <= 768 ? 4 : 3);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
@@ -367,10 +380,10 @@ const Main = () => {
           <M.Recent>
             <M.Title>최근 분석된 기사</M.Title>
             <M.List>
-              {analysisList.map((item) => (
+              {analysisList.slice(0, visibleCount).map((item) => (
                 <M.Component
                   key={item.analysisId}
-                  $bgImage={item.image} // ✅ 여기서 이미지 props 전달
+                  $bgImage={item.image}
                   onClick={() => handleAnalysisClick(item.analysisId)}
                   style={{ cursor: "pointer" }}
                 >
